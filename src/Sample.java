@@ -5,7 +5,7 @@
  */
 public class Sample {
 	//an id field to identify the sample
-	long id;
+	private long id;
 	private String description;
 
 	public Sample(){
@@ -21,9 +21,10 @@ public class Sample {
 	/**
 	 * this method returns a string that contains this object's information
 	 * in a human readable string
+	 * P.S. javadoc is cool
 	 */
 	public String toString(){
-		return "Contents: ID: " + id + "description: "+ description; 
+		return "Contents: ID: " + id + " description: "+ description; 
 	}
 	
 }
