@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
  *
  */
 
-public abstract class SequenceLoaderAbstract {
+public abstract class SequenceLoaderAbstract implements LetterGetter{
 
 	protected String sequence;
 	
@@ -103,5 +103,11 @@ public abstract class SequenceLoaderAbstract {
 	 * @param times the number of times s will be concatenated to the end sequence
 	 */
 	public abstract void concatenate(String s, int times);
+	
+	@Override
+	public char getLetter(int position){
+		return sequence.charAt(position);
+	}
+
 	
 }
