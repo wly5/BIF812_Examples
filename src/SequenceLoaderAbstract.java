@@ -6,11 +6,13 @@ import javax.swing.JFileChooser;
 
 /**
  * This class loads sequence data from a file.
+ * BUT we want to defer some decisions until we create a subclass
+ * in this case we'll show how to make this class abstract
  * @author marek
  *
  */
 
-public class SequenceLoader {
+public abstract class SequenceLoaderAbstract {
 
 	protected String sequence;
 	
@@ -94,15 +96,12 @@ public class SequenceLoader {
 	}
 	
 	/**
+	 * NOTE: that we are deferring the implementation of this method to a subclass
+	 * therefore we are declaring it as abstract.
 	 * This method will concatenate String s to the end of sequence the indicated number of times
 	 * @param s the string to concatenate to the end of sequence
 	 * @param times the number of times s will be concatenated to the end sequence
 	 */
-	public void concatenate(String s, int times) {
-
-		for(int i=0;i<times;i++){
-			System.out.println("Concatenating time "+ i + " of "+times);
-			sequence = sequence + s;
-		}
-	}	
+	public abstract void concatenate(String s, int times);
+	
 }
