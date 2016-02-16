@@ -105,7 +105,11 @@ public abstract class SequenceLoaderAbstract implements LetterGetter{
 	public abstract void concatenate(String s, int times);
 	
 	@Override
-	public char getLetter(int position){
+	public char getLetter(int position) throws IllegalArgumentException{
+		//to implement the exception checking and throwing, we need to add some logic here
+		if(sequence == null || position >= sequence.length() || position < 0){
+			throw new IllegalArgumentException("Position " + position + " is invalid for sequence of size " + sequence.length());
+		}
 		return sequence.charAt(position);
 	}
 

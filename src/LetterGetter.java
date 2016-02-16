@@ -9,8 +9,9 @@ public interface LetterGetter {
 	/**
 	 * this class is assumed to have a gene sequence (someplace)
 	 * it will return the letter at the specified position
+	 * @throws IllegalArgumentException if position is outside the bounds of the underlying representation
 	 * @param position indicates the desired position of a letter
 	 * @return the letter at the indicated position
 	 */
-	public char getLetter(int position);//NO IMPLEMENTATION!
+	public char getLetter(int position) throws IllegalArgumentException;
 }

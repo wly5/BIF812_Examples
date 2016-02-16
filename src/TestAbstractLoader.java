@@ -11,7 +11,11 @@ public class TestAbstractLoader {
 		int position = 100;
 		//use the getLetter method declared in the LetterGetter interface
 		//(implemented by SequenceLoaderAbstract)
-		System.out.println("The letter at " + position + " is " + sla.getLetter(position));
+		try{
+			System.out.println("The letter at " + position + " is " + sla.getLetter(position));
+		} catch (IllegalArgumentException e){
+			System.out.println("Caught exception when using getLetter, contents of exception are: "+ e.getMessage()+ " Stack trace: " + e.getStackTrace());
+		}
 
 	}
 
