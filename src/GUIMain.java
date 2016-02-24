@@ -1,5 +1,7 @@
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /*
  * this class will instantiate our JPanel class (MyFirstGUI.java) and places it inside a JFrame
@@ -7,6 +9,16 @@ import javax.swing.JFrame;
 public class GUIMain {
 
 	public static void main(String[] args) {
+		
+		//set the look and feel of our GUI
+		//note this code may throw an exception so...
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
 		
 		/*
 		 * indicate to the Java VM and GUI system that we want to call createAndShowGUI
