@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Button;
 
 import javax.swing.JPanel;
@@ -13,8 +15,9 @@ import javax.swing.JTextArea;
  * search string within the sequence string, and show the result using the searchResult Label
  * Performing the actual search is left as an exercise.
  * NOTE: a panel is an "inner" section of the GUI - the outer container is the JFrame that we instantiate in main
+ * This class implements ActionListner so that it can recieve events from GUI elements
  */
-public class MyFirstGUI extends JPanel{
+public class MyFirstGUI extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 5541128329654819823L;
 	//bit of Java trivia - each panel needs a unique identifier
@@ -32,7 +35,7 @@ public class MyFirstGUI extends JPanel{
 	public MyFirstGUI(){
 		//create a layout within our MyFirstGUI JPanel
 		//(note: the layout is itself a JPanel)
-		JPanel controlsArea = new JPanel(new GridLayout(3,2));
+		JPanel controlsArea = new JPanel(new GridLayout(3, 2, 5, 5));
 		//set Preferred Size
 		//setPreferredSize(new Dimension(500,400));
 		
@@ -52,8 +55,13 @@ public class MyFirstGUI extends JPanel{
 		controlsArea.add(searchBox);
 		
 		//instantiate the button and add it to the layout
-		searchButton = new Button("XXX");
+		searchButton = new Button("Search");
+		//tell the button that this object will handle its events
+		searchButton.addActionListener(this);
+		//set a string that will be passed in ActionEvent - inspect this string to see what event occurred
+		searchButton.setActionCommand("search button was clicked");
 		controlsArea.add(searchButton);
+		
 		
 		//instantiate and add the result label - that displays the result to the us
 		searchResult = new Label("<== click the button to search ");
@@ -61,6 +69,18 @@ public class MyFirstGUI extends JPanel{
 		
 		//IMPORTANT! don't forget to add the controls area layout (controlsArea) to the MyFirstGUI JPanel
 		this.add(controlsArea, BorderLayout.SOUTH);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getActionCommand() == "search button was clicked"){
+			System.out.println("button was clicked");
+			String tempText = sequenceBox.getText();
+			
+			searchResult.setText(tempText);
+			
+		}
+		
 	}
 	
 }
