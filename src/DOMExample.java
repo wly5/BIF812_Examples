@@ -6,6 +6,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /*
@@ -14,6 +16,9 @@ import org.xml.sax.SAXException;
  * Document which represents the XML document parsed into a tree
  * DocumentBuilder parses an XML document and creates a Document instance for you
  * DocumentBuilderFactory which is a class for instantiating DocumentBuilders on our behalf
+ * NodeList is a class that represents a list of DOM tree nodes - not necessarily in any kind of order
+ * NodeList uses the familar List API
+ * Node is a class that represents one Node or element in the DOM tree
  * note: once again we don't use new to instantiate any of these classes
  * (this is fairly common in frameworks)
  */
@@ -45,7 +50,20 @@ public class DOMExample {
 		//we can get the name of each Node (element) by calling Node.getNodeName()
 		System.out.println("Root element of " + filename + " is: " + document.getDocumentElement().getNodeName());
 		
+		//search the tree for particular elements by using the Document.getElementsByTagName(String name)
+		NodeList myNodeList = document.getElementsByTagName("URL");
+		//iterate through the NodeList using a loop and the familiar List Interface
+		for(int i =0; i < myNodeList.getLength(); i++){
+			//get a node by index by calling NodeList.item(int index)
+			Node myNode = myNodeList.item(i);
+			//use the Node.getTextContent() method to retrieve the text from the element
+			System.out.println(myNode.getTextContent());
+			
+		}
 		
 	}
 
 }
+
+
+
