@@ -6,6 +6,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -58,8 +59,34 @@ public class DOMExample {
 			Node myNode = myNodeList.item(i);
 			//use the Node.getTextContent() method to retrieve the text from the element
 			System.out.println(myNode.getTextContent());
-			
 		}
+		//demonstrate some other methods on another node to experiment on
+		//get a different node using getElementByName
+		//using method call chaining call .item() immediately on the NodeList that was returned
+		//this gets us the first node in the list!
+		Node anotherNode = document.getElementsByTagName("ReferenceClinVarAssertion").item(0);
+		//let's display anotherNode's name to be sure we got something valid
+		System.out.println("the name of the node we are playing with is: "+ anotherNode.getNodeName());
+		//now we can do more interesting things like inspect anotherNode's parents and children. So cool!
+		//get anotherNode's parent
+		Node parentNode = anotherNode.getParentNode();
+		//display the parentNode information
+		System.out.println("The tag (name) of anotherNode's parent node is: " + parentNode.getNodeName());
+		//let's attempt to also show the parent node's attributes
+		//The class that represents an Attribute is called Attr
+		NamedNodeMap attributes = parentNode.getAttributes();
+		//write a for loop to iterate through the list of attributes
+		System.out.println("Listing the parent node's attributes:");
+		for(int i = 0; i < attributes.getLength(); i++){
+			System.out.println(attributes.item(i));
+		}
+		
+		//now instead of the parent, let's get anotherNode's children
+		
+		
+		
+		
+		
 		
 	}
 
