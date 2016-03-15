@@ -4,8 +4,16 @@ import javax.swing.JFileChooser;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -22,10 +30,16 @@ import org.xml.sax.SAXException;
  * Node is a class that represents one Node or element in the DOM tree
  * note: once again we don't use new to instantiate any of these classes
  * (this is fairly common in frameworks)
+ * 
+ * Exercises:
+ * 1) perform a depth first traversal of the tree - recall using a list of nodes to visit
+ * visit each element and print: the element name, attributes (if any), element text (if any)
+ * 2) use a different output stream to write the modified XML document to a file instead of standard output
+ * 3) open an XML document from a remote URL and parse it.
  */
 public class DOMExample {
 
-	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, TransformerException {
 		//first step is to get the DocumentBuilderFactory
 		//use a static method call (we use the class name instead of a reference to an instance)
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -81,12 +95,44 @@ public class DOMExample {
 			System.out.println(attributes.item(i));
 		}
 		
-		//now instead of the parent, let's get anotherNode's children
+		//now instead of the parent, let's get anotherNode's (ReferenceClinVarAssertion) children and list them
+		System.out.println("Now printing out ReferenceClinVarAssertion's child nodes");;
+		NodeList childList = anotherNode.getChildNodes();
+		for(int i = 0; i< childList.getLength(); i++){
+			Node childNode = childList.item(i);
+			if(childNode.getNodeType() == Node.ELEMENT_NODE){
+				System.out.println("This child's tag: " + childNode.getNodeName() + " Text content (if any): " +childNode.getTextContent() );
+			}
+		}
 		
+		//example of editing the DOM tree
+		//add a child element to the exsting DOM tree
+		//create a new element that is not in the tree yet
+		Element aNewElement = document.createElement("Lunch");
+		//use Node.appendChild to actually add the child into the tree
+		//we're specifying the new element's parent...
+		anotherNode.appendChild(aNewElement);
 		
+		//add a new attribute to an existing element
+		//recall: Attr class represents an attribute
+		Attr newAttr = document.createAttribute("sandwich");
+		//assign the value of the attribute (currently it's blank)
+		newAttr.setNodeValue("cold cut combo sub");
+		//add the attribute as a child of an element
+		aNewElement.setAttributeNode(newAttr);
 		
+		//let's write the newly modified XML file to disk
+		//we use the Transformer class to perform the output task
+		//again, this uses static method calls and factories to get instances of the relevant classes
+		TransformerFactory tFactory = TransformerFactory.newInstance();
+		//get a Transformer from that factory
+		Transformer transformer = tFactory.newTransformer();
 		
-		
+		//create a new DOMSouce object
+		DOMSource src = new DOMSource(document);
+		//try to write this new xml document (to standard output (console) for now
+		StreamResult stream = new StreamResult(System.out);
+		transformer.transform(src, stream);
 		
 	}
 
